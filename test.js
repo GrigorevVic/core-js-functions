@@ -1,22 +1,10 @@
+const fn = function(x1,x2,x3,x4) { return  x1 + x2 + x3 + x4; };
 
- // const getId10 = gerIdGenerator(10);
-/*   getId4() => 4
-*   getId10() => 10
-*   getId4() => 5
-*   getId4() => 6
-*   getId4() => 7
-*   getId10() => 11
-*/
+function partialUsingArguments(fn, ...args1) {
+ return (...args) => fn(...args1, ...args);
+}
 
-function getIdGeneratorFunction(startFrom) {
-    let count = startFrom - 1;
-    function f() {
-    count += 1;
-    return count;
-    }
-    return f;
-  }
-const getId4 = getIdGeneratorFunction(4);
-console.log(getId4())
-console.log(getId4())
-console.log(getId4())
+let a = partialUsingArguments(fn, 'a')('b','c','d') //=> 'abcd'
+let b = partialUsingArguments(fn, 'a','b')('c','d') //=> 'abcd'
+let c = partialUsingArguments(fn, 'a','b','c')('d') //=> 'abcd'
+let d = partialUsingArguments(fn, 'a','b','c','d')() //=> 'abcd'
