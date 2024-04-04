@@ -1,10 +1,18 @@
-const fn = function(x1,x2,x3,x4) { return  x1 + x2 + x3 + x4; };
+const memoize = (func) => {
+  let cache;
+  return () => {
+    if (!cache) {
+      cache = func();
+      return cache;
+    }
+    const temp = cache;
+    cache = func();
+    return temp;
+  };
+};
 
-function partialUsingArguments(fn, ...args1) {
- return (...args) => fn(...args1, ...args);
-}
+const memoizer = memoize(() => Math.random());
 
-let a = partialUsingArguments(fn, 'a')('b','c','d') //=> 'abcd'
-let b = partialUsingArguments(fn, 'a','b')('c','d') //=> 'abcd'
-let c = partialUsingArguments(fn, 'a','b','c')('d') //=> 'abcd'
-let d = partialUsingArguments(fn, 'a','b','c','d')() //=> 'abcd'
+console.log(memoizer());
+console.log(memoizer());
+console.log(memoizer());
